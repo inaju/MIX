@@ -101,8 +101,8 @@ const defaultValues: Partial<ProfileFormValues> = {
     reason_for_learning: "I'm really passionate",
 }
 
-const index = () => {
-    const [isError, setIsError] = useState<number>()
+const Index = () => {
+    const [uploadingData, setUploadingData] = useState(false)
     // const [formLocation, setFormLocation] = useState('subscribe_socials')
     const [formLocation, setFormLocation] = useState('basic_info')
 
@@ -115,7 +115,7 @@ const index = () => {
     })
     const errorMessages = form.formState.errors
     const errorBool = errorMessages.firstname?.message?.length && errorMessages.lastname?.message?.length && errorMessages.email?.message?.length && errorMessages.outreach?.message?.length && errorMessages.age_group?.message?.length
-    
+
     useEffect(() => {
         if (errorBool) {
             alert("please fill all fields")
@@ -123,26 +123,31 @@ const index = () => {
         }
     }, [errorBool])
 
- 
- 
+
+
 
     async function onSubmit(data: ProfileFormValues) {
 
 
-        alert(data)
+        // alert(data)
+        setUploadingData(true);
         const { error } = await supabaseClient
             .from("applicants")
-            .insert([{ data }]);
+            .insert([{ ...data }]);
 
-        toast({
-            title: "You submitted the following values:",
-            description: (
+        if (!error) { setFormLocation("subscribe_socials") } else {
+            alert("Please try again")
+        }
+        setUploadingData(false);
+        // toast({
+        //     title: "You submitted the following values:",
+        //     description: (
 
-                { data }
+        //         { data }
 
 
-            ),
-        })
+        //     ),
+        // })
     }
 
     const handleNextItem = () => {
@@ -186,7 +191,7 @@ const index = () => {
                                     <div className="space-y-0.5">
                                         <h2 className="text-2xl font-bold tracking-tight">Basic Info</h2>
                                         <p className="text-muted-foreground">
-                                            Let's get to know you
+                                            Let&#39;s get to know you
                                         </p>
                                     </div>
                                     <SelectSeparator className="my-1" />
@@ -241,7 +246,7 @@ const index = () => {
                                 <FadeIn className="space-y-6">
 
                                     <div className="space-y-0.5">
-                                        <h2 className="text-2xl font-bold tracking-tight">What's your motivation?</h2>
+                                        <h2 className="text-2xl font-bold tracking-tight">What&#39;s your motivation?</h2>
                                         <p className="text-muted-foreground">
                                             I love it when people have a strong reason for doing what they do
                                         </p>
@@ -277,12 +282,12 @@ const index = () => {
                                                         </SelectTrigger>
                                                     </FormControl>
                                                     <SelectContent>
-                                                        <SelectItem value="m@example.com">below 13</SelectItem>
-                                                        <SelectItem value="m@google.com">13-16</SelectItem>
-                                                        <SelectItem value="m@google.com">17-20</SelectItem>
-                                                        <SelectItem value="m@google.com">21-25</SelectItem>
-                                                        <SelectItem value="m@google.com">25-30</SelectItem>
-                                                        <SelectItem value="m@google.com">31-40</SelectItem>
+                                                        <SelectItem value="b-13">below 13</SelectItem>
+                                                        <SelectItem value="13-16`">13-16</SelectItem>
+                                                        <SelectItem value="17-20">17-20</SelectItem>
+                                                        <SelectItem value="21-24">21-24</SelectItem>
+                                                        <SelectItem value="25-30">25-30</SelectItem>
+                                                        <SelectItem value="31-40">31-40</SelectItem>
                                                     </SelectContent>
                                                 </Select>
 
@@ -303,10 +308,10 @@ const index = () => {
                                                         </SelectTrigger>
                                                     </FormControl>
                                                     <SelectContent>
-                                                        <SelectItem value="m@example.com">Twitter</SelectItem>
-                                                        <SelectItem value="m@google.com">Linkedin</SelectItem>
-                                                        <SelectItem value="m@google.com">Whatsapp</SelectItem>
-                                                        <SelectItem value="m@google.com">Threads</SelectItem>
+                                                        <SelectItem value="Twitter">Twitter</SelectItem>
+                                                        <SelectItem value="Linkedin">Linkedin</SelectItem>
+                                                        <SelectItem value="Whatsapp">Whatsapp</SelectItem>
+                                                        <SelectItem value="Threads">Threads</SelectItem>
                                                     </SelectContent>
                                                 </Select>
 
@@ -320,6 +325,7 @@ const index = () => {
                                         render={({ field }) => (
                                             <FormItem>
                                                 <FormLabel>Who referred you?</FormLabel>
+                                                <FormDescription>*Optional Field</FormDescription>
                                                 <FormControl>
                                                     <Input
                                                         placeholder="Alexender Dowie?"
@@ -384,31 +390,20 @@ const index = () => {
                             <>
                                 <FadeIn className="space-y-6">
 
-                                    <FormField
-                                        control={form.control}
-                                        name="newsletter"
-                                        render={({ field }) => (
-                                            <FormItem className="flex flex-col items-start justify-between rounded-lg">
-                                                <div className="space-y-0.5">
-                                                    <FormLabel className="text-base">Subscribe to my newsletter</FormLabel>
-                                                    <FormDescription>
-                                                        Get weekly emails about how to grow your career in tech
-                                                    </FormDescription>
-                                                </div>
-                                                <iframe src="https://mitchelinaju.substack.com/embed"
-                                                    className="p-0 m-0 bg-white w-full h-[190px]"
-                                                    frameBorder="0" scrolling="no"></iframe>
-                                                <FormControl>
-                                                    <>
-                                                        {/* <Switch
-                                                    checked={field.value}
-                                                    onCheckedChange={field.onChange}
-                                                /> */}
-                                                    </>
-                                                </FormControl>
-                                            </FormItem>
-                                        )}
-                                    />
+                                    <FormItem className="flex flex-col items-start justify-between rounded-lg">
+                                        <div className="space-y-0.5">
+                                            <FormLabel className="text-base">Subscribe to my newsletter</FormLabel>
+                                            <FormDescription>
+                                                Get weekly emails about how to grow your career in tech
+                                            </FormDescription>
+                                        </div>
+                                        <iframe src="https://mitchelinaju.substack.com/embed"
+                                            className="p-0 m-0 bg-white w-full h-[190px]"
+                                            frameBorder="0" scrolling="no"></iframe>
+
+                                    </FormItem>
+
+
                                     <div className="flex items-center gap-2">
 
 
@@ -418,7 +413,6 @@ const index = () => {
                                             size="sm"
                                             className="mt-2"
                                             onClick={() => handlePreviousItem()}
-
                                         >
                                             <MoveLeft className=" mr-3 w-[13px]" />
                                             Go Back
@@ -427,10 +421,17 @@ const index = () => {
                                         <Button
                                             size="sm"
                                             className="mt-2"
-                                            type="submit">Send Application</Button>
+                                            disabled={uploadingData}
+                                            type="submit">
+
+                                            {uploadingData ? "Processing..." :
+                                                "Send Application"
+                                            }
+
+                                        </Button>
                                     </div>
                                     <FormDescription>
-                                        *Make sure you send your application after subscribing to the newsletter, if not you wouldn't be considered
+                                        *Make sure you send your application after subscribing to the newsletter, if not you wouldn&#39;t be considered
                                     </FormDescription>
                                 </FadeIn>
                             </>}
@@ -478,8 +479,8 @@ const index = () => {
                                 </div>
                                 <Lottie
                                     options={defaultOptions}
-                                    height={400}
-                                    width={400}
+                                    height={300}
+                                    width={300}
                                 />
                                 <p>Join the whatsapp group here</p>
                             </>
@@ -492,4 +493,4 @@ const index = () => {
     )
 }
 
-export default index
+export default Index
