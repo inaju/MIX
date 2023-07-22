@@ -38,7 +38,8 @@ import { GoogleFormProvider, useGoogleForm, useShortAnswerInput } from 'react-go
 
 // import getGoogleFormAsJson from '@/lib/utils'
 import { googleFormsToJson } from "react-google-forms-hooks";
-import { supabaseClient } from "./client"
+// import { supabaseClient } from "./client"
+import { createClient } from "@supabase/supabase-js";
 import Navbar from "@/components/Navbar"
 
 
@@ -101,7 +102,16 @@ const defaultValues: Partial<ProfileFormValues> = {
     reason_for_learning: "I'm really passionate",
 }
 
+
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
+const SUPBASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string;
+if (SUPABASE_URL) {
+
+    var supabaseClient = createClient(SUPABASE_URL, SUPBASE_ANON_KEY);
+}
+
 const Index = () => {
+
     const [uploadingData, setUploadingData] = useState(false)
     // const [formLocation, setFormLocation] = useState('subscribe_socials')
     const [formLocation, setFormLocation] = useState('basic_info')
