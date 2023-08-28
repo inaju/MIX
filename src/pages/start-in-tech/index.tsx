@@ -4,7 +4,7 @@ import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import * as z from "zod";
-
+import * as axios from "axios";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -194,7 +194,7 @@ const Index = () => {
   return (
     <>
       <Navbar />
-      <main className="md:w-full lg:w-[35vw] m-2 lg:mx-auto p-6 border border-[#F61067]/[0.2] rounded-lg mt-20 lg:mt-10 lg:translate-x-[-50%] lg:translate-y-[-50%] lg:absolute lg:top-[50%] lg:left-[50%]">
+      <main className="md:w-full lg:w-[35vw] m-2 lg:mx-auto p-10 lg:p-6 border border-[#F61067]/[0.2] rounded-lg mt-20 lg:mt-10 lg:translate-x-[-50%] lg:translate-y-[-50%] lg:absolute lg:top-[50%] lg:left-[50%]">
         <Form {...form}>
           {/* {[form.formState.errors].map((item:any,index:number)=>console.log(item.message?.length ))} */}
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -217,7 +217,7 @@ const Index = () => {
                       <FormItem>
                         <FormLabel>First Name</FormLabel>
                         <FormControl>
-                          <Input placeholder="Mitchel" {...field} />
+                          <Input placeholder="Tola" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -230,7 +230,7 @@ const Index = () => {
                       <FormItem>
                         <FormLabel>Last Name</FormLabel>
                         <FormControl>
-                          <Input placeholder="Inaju" {...field} />
+                          <Input placeholder="Ebube" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -243,7 +243,7 @@ const Index = () => {
                       <FormItem>
                         <FormLabel>Email</FormLabel>
                         <FormControl>
-                          <Input placeholder="Inaju" {...field} />
+                          <Input placeholder="tolaebube@email.com" {...field} />
                         </FormControl>
 
                         <FormDescription>
