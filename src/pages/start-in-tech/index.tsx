@@ -115,7 +115,7 @@ if (SUPABASE_URL) {
 
 const Index = () => {
   const [uploadingData, setUploadingData] = useState(false);
-  // const [formLocation, setFormLocation] = useState('subscribe_socials')
+  const [errorMsg, setErrorMsg] = useState("");
   const [formLocation, setFormLocation] = useState("basic_info");
 
   const form = useForm<ProfileFormValues>({
@@ -131,10 +131,22 @@ const Index = () => {
     errorMessages.outreach?.message?.length &&
     errorMessages.age_group?.message?.length;
 
-  //   useEffect(() => {
-  //     checkFields();
-  //   }, [errorBool]);
+     const checkKeys = Object.keys(form.formState.errors);
 
+     const checkFields = () => {
+       if (checkKeys.length > 0) {
+         setErrorMsg(`please go back and fill the ${checkKeys} fields`);
+         // alert(`please fill the ${checkKeys} fields`);
+       } else {
+         setErrorMsg(``);
+       }
+     };
+
+    useEffect(() => {
+      checkFields();
+    }, [errorBool, checkKeys, form.formState.errors]);
+
+    
   async function onSubmit(data: ProfileFormValues) {
     alert("submitting");
 
@@ -184,13 +196,7 @@ const Index = () => {
     }
   };
 
-  const checkKeys = Object.keys(form.formState.errors);
-
-  const checkFields = () => {
-    if (checkKeys.length > 0) {
-      alert(`please fill the ${checkKeys} fields`);
-    }
-  };
+ 
 
   return (
     <>
@@ -449,12 +455,13 @@ const Index = () => {
                       onClick={checkFields}
                       size="sm"
                       className="mt-2"
-                      disabled={uploadingData}
+                      disabled={errorMsg.length>0||uploadingData}
                       type="submit"
                     >
                       {uploadingData ? "Processing..." : "Send Application"}
                     </Button>
                   </div>
+                  <div className="text-red-600">{errorMsg}</div>
                   <FormDescription>
                     *Make sure you send your application after subscribing to
                     the newsletter, if not, it wouldn&#39;t go through
