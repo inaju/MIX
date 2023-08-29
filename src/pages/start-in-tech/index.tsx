@@ -94,9 +94,9 @@ const profileFormSchema = z.object({
   referrer: z.string().max(160).min(4).optional(),
   outreach: z.string().max(160).min(4),
 
-  twitter: z.string().url({ message: "Please enter a valid URL." }).optional(),
+  twitter: z.string().optional(),
 
-  linkedin: z.string().url({ message: "Please enter a valid URL." }).optional(),
+  linkedin: z.string().optional(),
   age_group: z.string({ required_error: "Please enter your age group" }),
 });
 
@@ -184,10 +184,11 @@ const Index = () => {
     }
   };
 
+  const checkKeys = Object.keys(form.formState.errors);
+
   const checkFields = () => {
-    const checkKeys = Object.keys(form.formState.errors);
     if (checkKeys.length > 0) {
-      alert("please fill all fields");
+      alert(`please fill the ${checkKeys} fields`);
     }
   };
 
