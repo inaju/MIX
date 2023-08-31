@@ -27,7 +27,7 @@ export const NotionMagicLinkEmail = ({
       <Container style={container}>
         <Heading style={h1}>Hey {firstName}</Heading>
         <Text>Thanks for joining this bootcamp, I'm sure you're gonna learn alot</Text>
-        <Text>Please come with an open mind and a be ready to learn and implement all that would be thought</Text>
+        <Text>Please come with an open mind and be ready to learn and implement all that would be thought</Text>
         <Text>See you in Class</Text>
         <Link
           href={whatsappGroupLink}
