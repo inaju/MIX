@@ -3,7 +3,7 @@ import { NotionMagicLinkEmail } from "../../emails/index";
 import { resend } from "../../lib/resend";
 import { NextResponse } from "next/server";
 
-const POST = async (req: Request, res: NextApiResponse) => {
+const POST = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req) {
     const { firstname, email } = JSON.parse(req?.body);
     console.log(firstname, email, "firstname, email");
