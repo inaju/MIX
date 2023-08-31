@@ -48,6 +48,9 @@ import {
   useShortAnswerInput,
 } from "react-google-forms-hooks";
 
+import { Resend } from "resend";
+import { Email } from "../../emails/email";
+
 // import getGoogleFormAsJson from '@/lib/utils'
 import { googleFormsToJson } from "react-google-forms-hooks";
 // import { supabaseClient } from "./client"
@@ -131,24 +134,32 @@ const Index = () => {
     errorMessages.outreach?.message?.length &&
     errorMessages.age_group?.message?.length;
 
-     const checkKeys = Object.keys(form.formState.errors);
+  const checkKeys = Object.keys(form.formState.errors);
 
-     const checkFields = () => {
-       if (checkKeys.length > 0) {
-         setErrorMsg(`please go back and fill the ${checkKeys} fields`);
-         // alert(`please fill the ${checkKeys} fields`);
-       } else {
-         setErrorMsg(``);
-       }
-     };
+  const checkFields = () => {
+    if (checkKeys.length > 0) {
+      setErrorMsg(`please go back and fill the ${checkKeys} fields`);
+      // alert(`please fill the ${checkKeys} fields`);
+    } else {
+      setErrorMsg(``);
+    }
+  };
 
-    useEffect(() => {
-      checkFields();
-    }, [errorBool, checkKeys, form.formState.errors]);
+  useEffect(() => {
+    checkFields();
+    console.log(form.formState, "form.formState");
+  }, [errorBool, checkKeys, form.formState.errors]);
 
-    
   async function onSubmit(data: ProfileFormValues) {
     alert("submitting");
+
+    await fetch("/api/send", {
+      method: "POST",
+      body: JSON.stringify({
+        firstname: data.firstname,
+        email: data.email,
+      }),
+    });
 
     setUploadingData(true);
     const { error } = await supabaseClient
@@ -173,6 +184,15 @@ const Index = () => {
   }
 
   const handleNextItem = () => {
+    // const resend = new Resend("re_hgsMxkv2_FtACtMz94Ev9WyXrq1UrDoVK");
+
+    // resend.sendEmail({
+    //   from: "mitchelinajuo@gmail.com",
+    //   to: "mitchelinajuo@gmail.com",
+    //   subject: "hello world",
+    //   react: <Email firstName="John" product="MyApp" />,
+    // });
+
     if (formLocation == "basic_info") {
       setFormLocation("reason_field");
     }
@@ -195,8 +215,6 @@ const Index = () => {
       setFormLocation("socials");
     }
   };
-
- 
 
   return (
     <>
@@ -455,7 +473,7 @@ const Index = () => {
                       onClick={checkFields}
                       size="sm"
                       className="mt-2"
-                      disabled={errorMsg.length>0||uploadingData}
+                      disabled={errorMsg.length > 0 || uploadingData}
                       type="submit"
                     >
                       {uploadingData ? "Processing..." : "Send Application"}
@@ -510,12 +528,17 @@ const Index = () => {
                   </p>
                 </div>
                 <Lottie options={defaultOptions} height={300} width={300} />
-                <a
-                  className="text-blue-500"
-                  href="htps://chat.whatsapp.com/EEplj71Rtd31HRNGk2mS5Y"
+                <Link
+                className="text-blue-600"
+                  href="https://chat.whatsapp.com/EEplj71Rtd31HRNGk2mS5Y"
+                  target="_blank"
+                  style={{
+                    display: "block",
+                    marginBottom: "16px",
+                  }}
                 >
-                  Join the whatsapp group here
-                </a>
+                  Click here to join the whatsapp group in with this magic link
+                </Link>
               </>
             )}
           </form>
