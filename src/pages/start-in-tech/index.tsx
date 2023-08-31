@@ -330,7 +330,7 @@ const Index = () => {
                           </FormControl>
                           <SelectContent>
                             <SelectItem value="b-13">below 13</SelectItem>
-                            <SelectItem value="13-16`">13-16</SelectItem>
+                            <SelectItem value="13-16">13-16</SelectItem>
                             <SelectItem value="17-20">17-20</SelectItem>
                             <SelectItem value="21-24">21-24</SelectItem>
                             <SelectItem value="25-30">25-30</SelectItem>

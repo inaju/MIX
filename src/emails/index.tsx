@@ -26,8 +26,13 @@ export const NotionMagicLinkEmail = ({
     <Body style={main}>
       <Container style={container}>
         <Heading style={h1}>Hey {firstName}</Heading>
-        <Text>Thanks for joining this bootcamp, I'm sure you're gonna learn alot</Text>
-        <Text>Please come with an open mind and be ready to learn and implement all that would be thought</Text>
+        <Text>
+          Thanks for joining this bootcamp, I'm sure you're gonna learn alot.
+        </Text>
+        <Text>
+          Please come with an open mind and be ready to learn and implement all
+          that would be thought.
+        </Text>
         <Text>See you in Class</Text>
         <Link
           href={whatsappGroupLink}
@@ -38,7 +43,7 @@ export const NotionMagicLinkEmail = ({
             marginBottom: "16px",
           }}
         >
-          Click here to join the whatsapp group in with this magic link
+          Click here to join the whatsapp group in with this link.
         </Link>
         <Text style={{ ...text, marginBottom: "14px" }}>
           Or, copy and paste this link:
